@@ -99,6 +99,15 @@ class MainActivity : AppCompatActivity() {
             findViewById<EditText>(R.id.searchWiki).clearFocus()
         }
 
+        // NEW: Villager Gift Guide Tool
+        val btnVillagerGiftsTool = navView.findViewById<Button>(R.id.btnVillagerGiftsTool)
+        btnVillagerGiftsTool.setOnClickListener {
+            loadingOverlay.visibility = View.VISIBLE
+            webView.loadUrl("https://palia.wiki.gg/wiki/Gifts")
+            drawerLayout.closeDrawer(GravityCompat.START)
+            findViewById<EditText>(R.id.searchWiki).clearFocus()
+        }
+
         val btnServerStatusTool = navView.findViewById<Button>(R.id.btnServerStatusTool)
         btnServerStatusTool.setOnClickListener {
             loadingOverlay.visibility = View.VISIBLE
@@ -187,8 +196,7 @@ class MainActivity : AppCompatActivity() {
         settings.loadWithOverviewMode = true
         settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
-
-        // STEAM LOGIN BYPASS: Removes the "wv" identifier so OAuth providers treat it like standard Chrome
+        
         settings.userAgentString = settings.userAgentString.replace("; wv", "")
         
         webView.webViewClient = object : WebViewClient() {
