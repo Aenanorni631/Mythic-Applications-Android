@@ -15,6 +15,7 @@ import android.webkit.WebViewClient
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -26,7 +27,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var webView: WebView
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var favPrefs: SharedPreferences
-    private lateinit var savedPagesContainer: LinearLayout
     private var currentUrl: String = "https://palia.wiki.gg/"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,8 +46,12 @@ class MainActivity : AppCompatActivity() {
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
+        // Hook up the new Tool Button
         val navView = findViewById<com.google.android.material.navigation.NavigationView>(R.id.nav_view)
-        savedPagesContainer = navView.findViewById(R.id.savedPagesContainer)
+        val btnSavedLinksTool = navView.findViewById<Button>(R.id.btnSavedLinksTool)
+        btnSavedLinksTool.setOnClickListener {
+            openSavedLinksMenu()
+        }
 
         webView = findViewById(R.id.wikiWebView)
         val searchField = findViewById<EditText>(R.id.searchWiki)
@@ -59,7 +63,7 @@ class MainActivity : AppCompatActivity() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
                 currentUrl = url ?: ""
-                invalidateOptionsMenu() // Refresh star icon
+                invalidateOptionsMenu() 
             }
         }
         webView.loadUrl(currentUrl)
@@ -80,8 +84,6 @@ class MainActivity : AppCompatActivity() {
                 true
             } else false
         }
-
-        updateSidebar()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -116,7 +118,6 @@ class MainActivity : AppCompatActivity() {
     private fun toggleFavorite() {
         if (favPrefs.contains(currentUrl)) {
             favPrefs.edit().remove(currentUrl).apply()
-            updateSidebar()
             invalidateOptionsMenu()
         } else {
             showSaveDialog()
@@ -125,7 +126,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun showSaveDialog() {
         val input = EditText(this)
-        input.hint = "Enter custom name (e.g. Flow Tree Locations)"
+        input.hint = "Custom Name (e.g. Flow Trees)"
         input.setText(webView.title)
 
         AlertDialog.Builder(this)
@@ -135,7 +136,6 @@ class MainActivity : AppCompatActivity() {
                 val customName = input.text.toString().trim()
                 if (customName.isNotEmpty()) {
                     favPrefs.edit().putString(currentUrl, customName).apply()
-                    updateSidebar()
                     invalidateOptionsMenu()
                 }
             }
@@ -143,22 +143,66 @@ class MainActivity : AppCompatActivity() {
             .show()
     }
 
-    private fun updateSidebar() {
-        savedPagesContainer.removeAllViews()
-        val allFavs = favPrefs.all
-        for ((url, title) in allFavs) {
-            val tv = TextView(this).apply {
-                text = "⭐ " + title.toString()
-                setTextColor(Color.WHITE)
-                textSize = 18f
-                setPadding(0, 16, 0, 16)
-                setOnClickListener {
-                    webView.loadUrl(url)
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                }
-            }
-            savedPagesContainer.addView(tv)
+    // Opens the dedicated popup menu for saved links
+    private fun openSavedLinksMenu() {
+        val dialogView = ScrollView(this)
+        val container = LinearLayout(this).apply { 
+            orientation = LinearLayout.VERTICAL
+            setPadding(40, 40, 40, 40) 
         }
+        dialogView.addView(container)
+
+        val dialog = AlertDialog.Builder(this)
+            .setTitle("Saved Wiki Links")
+            .setView(dialogView)
+            .setPositiveButton("Close", null)
+            .create()
+
+        val allFavs = favPrefs.all
+        if (allFavs.isEmpty()) {
+            container.addView(TextView(this).apply { 
+                text = "No saved links found. Press the star icon on a wiki page to save it."
+                textSize = 16f 
+            })
+        } else {
+            for ((url, title) in allFavs) {
+                val row = LinearLayout(this).apply { 
+                    orientation = LinearLayout.HORIZONTAL
+                    setPadding(0, 16, 0, 16) 
+                }
+                
+                // Clickable Title
+                val titleView = TextView(this).apply {
+                    text = "⭐ $title"
+                    textSize = 18f
+                    setTextColor(Color.BLACK)
+                    layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+                    setOnClickListener {
+                        webView.loadUrl(url)
+                        dialog.dismiss()
+                        drawerLayout.closeDrawer(GravityCompat.START)
+                    }
+                }
+                
+                // Delete/Unfavorite Button
+                val deleteBtn = Button(this).apply {
+                    text = "X"
+                    setBackgroundColor(Color.RED)
+                    setTextColor(Color.WHITE)
+                    setOnClickListener {
+                        favPrefs.edit().remove(url).apply()
+                        container.removeView(row)
+                        invalidateOptionsMenu()
+                        if (favPrefs.all.isEmpty()) dialog.dismiss()
+                    }
+                }
+                
+                row.addView(titleView)
+                row.addView(deleteBtn)
+                container.addView(row)
+            }
+        }
+        dialog.show()
     }
 
     override fun onBackPressed() {
