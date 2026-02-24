@@ -164,7 +164,7 @@ class MainActivity : AppCompatActivity() {
             container.addView(TextView(this).apply { 
                 text = "No saved links found. Press the star icon on a wiki page to save it."
                 textSize = 16f
-                setTextColor(ContextCompat.getColor(context, R.color.text_gray))
+                setTextColor(Color.GRAY)
             })
         } else {
             for ((url, title) in allFavs) {
