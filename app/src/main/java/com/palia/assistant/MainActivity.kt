@@ -55,17 +55,15 @@ class MainActivity : AppCompatActivity() {
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        // --- INJECT CUSTOM LOADING SCREEN (CENTERED FIX) ---
         val rootLayout = findViewById<ViewGroup>(android.R.id.content)
         loadingOverlay = LinearLayout(this).apply {
             layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
             setBackgroundColor(Color.parseColor("#0F0C29"))
-            gravity = Gravity.CENTER // Centers content vertically and horizontally
+            gravity = Gravity.CENTER
             orientation = LinearLayout.VERTICAL
             visibility = View.VISIBLE
             elevation = 100f
 
-            // Define layout params to ensure horizontal centering within the vertical layout
             val centerParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
@@ -84,13 +82,12 @@ class MainActivity : AppCompatActivity() {
                 setTextColor(Color.WHITE)
                 textSize = 18f
                 setPadding(0, 24, 0, 0)
-                gravity = Gravity.CENTER // Center text within itself
+                gravity = Gravity.CENTER
                 layoutParams = centerParams
             }
             addView(text)
         }
         rootLayout.addView(loadingOverlay)
-        // ------------------------------------
 
         val navView = findViewById<com.google.android.material.navigation.NavigationView>(R.id.nav_view)
         
@@ -114,6 +111,12 @@ class MainActivity : AppCompatActivity() {
             webView.loadUrl("https://palia.interactivemap.app/")
             drawerLayout.closeDrawer(GravityCompat.START)
             findViewById<EditText>(R.id.searchWiki).clearFocus()
+        }
+
+        val btnQuickReferenceTool = navView.findViewById<Button>(R.id.btnQuickReferenceTool)
+        btnQuickReferenceTool.setOnClickListener {
+            startActivity(Intent(this, QuickReferenceActivity::class.java))
+            drawerLayout.closeDrawer(GravityCompat.START)
         }
 
         webView = findViewById(R.id.wikiWebView)

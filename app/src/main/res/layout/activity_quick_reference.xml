@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0F0C29"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#1A1638"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:layout_marginBottom="16dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Flow Tree Groves" android:textColor="#6A5ACD" android:textSize="20sp" android:textStyle="bold" android:layout_marginBottom="8dp"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="• Spawns: Every midnight (12:00 AM) in-game. This happens exactly at the top of every real-world hour.\n• Location: Bahari Bay. Look for a large purple swirl in the sky and listen for a distinct spawn sound.\n• Etiquette: Players will flare the grove and call out the location in server chat. It is standard community etiquette to wait until 3:00 AM in-game so everyone has time to travel across the map before chopping.\n• Bonus: One epic bug or magic creature is guaranteed to spawn inside the grove." android:textColor="#FFFFFF" android:textSize="16sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#1A1638"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:layout_marginBottom="16dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Rummage Piles" android:textColor="#6A5ACD" android:textSize="20sp" android:textStyle="bold" android:layout_marginBottom="8dp"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="• Limits: 1 pile in Kilima Valley, 1 pile in Bahari Bay, and 2 piles in the Elderwood per day.\n• Resets: 4:00 AM UTC daily.\n• Rewards: Exclusive furniture recipes, found item quests, and random resources." android:textColor="#FFFFFF" android:textSize="16sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#1A1638"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:layout_marginBottom="16dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Gardening Crop Bonuses" android:textColor="#6A5ACD" android:textSize="20sp" android:textStyle="bold" android:layout_marginBottom="8dp"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Planting these next to other crops grants an adjacent bonus (diagonals do not count):\n\n• Water Retain: Tomatoes, Potatoes, Napa Cabbage\n• Weed Block: Carrots, Onions, Bok Choy\n• Harvest Boost (Yield): Wheat, Rice, Corn, Apples, Blueberries, Batterfly Beans\n• Quality Boost: Cotton, Spicy Peppers, Rockhopper Pumpkins" android:textColor="#FFFFFF" android:textSize="16sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#1A1638"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:layout_marginBottom="16dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Server Resets" android:textColor="#6A5ACD" android:textSize="20sp" android:textStyle="bold" android:layout_marginBottom="8dp"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Daily Reset (4:00 AM UTC):\n• Resets: Daily Gifts, Zeki's Coin, Rummage Piles\n\nWeekly Reset (Sunday 4:00 AM UTC):\n• Resets: Villager Weekly Wants, Guild Store Limits" android:textColor="#FFFFFF" android:textSize="16sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#1A1638"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:layout_marginBottom="16dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Time Conversion" android:textColor="#6A5ACD" android:textSize="20sp" android:textStyle="bold" android:layout_marginBottom="8dp"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="• 1 Real Hour = 1 Palia Day\n• 2.5 Real Minutes = 1 Palia Hour\n• Day Time: 6:00 AM - 6:00 PM (In-Game)\n• Night Time: 6:00 PM - 6:00 AM (In-Game)" android:textColor="#FFFFFF" android:textSize="16sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#1A1638"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:layout_marginBottom="32dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Universal 'Safe' Gifts" android:textColor="#6A5ACD" android:textSize="20sp" android:textStyle="bold" android:layout_marginBottom="8dp"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="If you don't know what they want, almost all villagers will accept these:\n\n• Silk Thread\n• Apples / Blueberries\n• Coral / Pearls\n• Unopened Oysters\n• Leather" android:textColor="#FFFFFF" android:textSize="16sp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

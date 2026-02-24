@@ -40,6 +40,15 @@
         android:text="Interactive Map"
         android:backgroundTint="#302B63"
         android:textColor="#FFFFFF"
+        android:layout_marginBottom="12dp"/>
+
+    <Button
+        android:id="@+id/btnQuickReferenceTool"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Quick Reference"
+        android:backgroundTint="#302B63"
+        android:textColor="#FFFFFF"
         android:layout_marginBottom="24dp"/>
 
     <View
