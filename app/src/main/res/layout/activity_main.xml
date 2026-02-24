@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/palia_secondary"
-            app:title="Palia Assistant v1.0"
+            app:title="Palia Assistant"
             app:titleTextColor="@color/white" />
 
         <LinearLayout
