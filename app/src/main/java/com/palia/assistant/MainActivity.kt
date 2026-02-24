@@ -99,7 +99,6 @@ class MainActivity : AppCompatActivity() {
             findViewById<EditText>(R.id.searchWiki).clearFocus()
         }
 
-        // FIXED: Using PaliaPedia for Server Status & Live Events
         val btnServerStatusTool = navView.findViewById<Button>(R.id.btnServerStatusTool)
         btnServerStatusTool.setOnClickListener {
             loadingOverlay.visibility = View.VISIBLE
@@ -108,11 +107,34 @@ class MainActivity : AppCompatActivity() {
             findViewById<EditText>(R.id.searchWiki).clearFocus()
         }
 
-        // FIXED: Using the official PaliaTracker for Villagers
         val btnPaliaTrackerTool = navView.findViewById<Button>(R.id.btnPaliaTrackerTool)
         btnPaliaTrackerTool.setOnClickListener {
             loadingOverlay.visibility = View.VISIBLE
             webView.loadUrl("https://www.paliatracker.com/")
+            drawerLayout.closeDrawer(GravityCompat.START)
+            findViewById<EditText>(R.id.searchWiki).clearFocus()
+        }
+
+        val btnGardenPlannerTool = navView.findViewById<Button>(R.id.btnGardenPlannerTool)
+        btnGardenPlannerTool.setOnClickListener {
+            loadingOverlay.visibility = View.VISIBLE
+            webView.loadUrl("https://palia-garden-planner.vercel.app/")
+            drawerLayout.closeDrawer(GravityCompat.START)
+            findViewById<EditText>(R.id.searchWiki).clearFocus()
+        }
+
+        val btnPaliapediaTool = navView.findViewById<Button>(R.id.btnPaliapediaTool)
+        btnPaliapediaTool.setOnClickListener {
+            loadingOverlay.visibility = View.VISIBLE
+            webView.loadUrl("https://paliapedia.com/")
+            drawerLayout.closeDrawer(GravityCompat.START)
+            findViewById<EditText>(R.id.searchWiki).clearFocus()
+        }
+
+        val btnPlayerSupportTool = navView.findViewById<Button>(R.id.btnPlayerSupportTool)
+        btnPlayerSupportTool.setOnClickListener {
+            loadingOverlay.visibility = View.VISIBLE
+            webView.loadUrl("https://support.palia.com/")
             drawerLayout.closeDrawer(GravityCompat.START)
             findViewById<EditText>(R.id.searchWiki).clearFocus()
         }
@@ -165,6 +187,9 @@ class MainActivity : AppCompatActivity() {
         settings.loadWithOverviewMode = true
         settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
+
+        // STEAM LOGIN BYPASS: Removes the "wv" identifier so OAuth providers treat it like standard Chrome
+        settings.userAgentString = settings.userAgentString.replace("; wv", "")
         
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
