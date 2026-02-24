@@ -100,6 +100,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         // NEW: Server Status Tool
+        val btnVillagerTrackerTool = navView.findViewById<Button>(R.id.btnVillagerTrackerTool)
+        btnVillagerTrackerTool.setOnClickListener {
+            startActivity(Intent(this, VillagerTrackerActivity::class.java))
+            drawerLayout.closeDrawer(GravityCompat.START)
+        }
+
         val btnServerStatusTool = navView.findViewById<Button>(R.id.btnServerStatusTool)
         btnServerStatusTool.setOnClickListener {
             loadingOverlay.visibility = View.VISIBLE
