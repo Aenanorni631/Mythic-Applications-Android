@@ -3,16 +3,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/palia_primary"
-    android:gravity="center"
     android:orientation="vertical"
     android:padding="24dp">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Saved Wiki Pages"
+        android:textColor="@color/palia_accent"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <LinearLayout
+            android:id="@+id/savedPagesContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/palia_secondary"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Tools and features are currently under development."
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textStyle="italic" />
 </LinearLayout>

@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/action_favorite"
+        android:title="Favorite"
+        android:icon="@drawable/ic_star_outline"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/action_settings"
         android:title="Settings"
         app:showAsAction="always" />
