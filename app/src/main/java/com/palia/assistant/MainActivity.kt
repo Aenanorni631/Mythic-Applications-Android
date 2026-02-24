@@ -170,6 +170,12 @@ class MainActivity : AppCompatActivity() {
             findViewById<EditText>(R.id.searchWiki).clearFocus()
         }
 
+        val btnNotesTool = navView.findViewById<Button>(R.id.btnNotesTool)
+        btnNotesTool.setOnClickListener {
+            startActivity(Intent(this, NotesActivity::class.java))
+            drawerLayout.closeDrawer(GravityCompat.START)
+        }
+
         val btnQuickReferenceTool = navView.findViewById<Button>(R.id.btnQuickReferenceTool)
         btnQuickReferenceTool.setOnClickListener {
             startActivity(Intent(this, QuickReferenceActivity::class.java))
