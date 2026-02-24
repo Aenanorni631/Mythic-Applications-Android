@@ -21,5 +21,6 @@
         <activity android:name=".SavedLinksActivity" android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
         <activity android:name=".QuickReferenceActivity" android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
         <activity android:name=".VillagerGuideActivity" android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
+        <activity android:name=".VillagerTrackerActivity" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
     </application>
 </manifest>

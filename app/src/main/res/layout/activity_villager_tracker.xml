@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#0F0C29">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#1A1638"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp"
+        android:elevation="8dp">
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Back"
+            android:backgroundTint="#302B63"
+            android:textColor="#FFFFFF"
+            android:layout_marginEnd="16dp"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="In-Game Time:"
+            android:textColor="#6A5ACD"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="end"
+            android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:id="@+id/tvClock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12:00"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tvAmPm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AM"
+            android:textColor="#AAAAAA"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginStart="4dp"/>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <WebView
+            android:id="@+id/trackerWebView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <LinearLayout
+            android:id="@+id/loadingOverlayTracker"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#0F0C29"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateTint="#6A5ACD"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Loading Live Map..."
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:layout_marginTop="16dp"/>
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>
