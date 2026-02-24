@@ -91,11 +91,19 @@ class MainActivity : AppCompatActivity() {
 
         val navView = findViewById<com.google.android.material.navigation.NavigationView>(R.id.nav_view)
         
-        // NEW: Palia Wiki Home Button
         val btnHomeWikiTool = navView.findViewById<Button>(R.id.btnHomeWikiTool)
         btnHomeWikiTool.setOnClickListener {
             loadingOverlay.visibility = View.VISIBLE
             webView.loadUrl("https://palia.wiki.gg/")
+            drawerLayout.closeDrawer(GravityCompat.START)
+            findViewById<EditText>(R.id.searchWiki).clearFocus()
+        }
+
+        // NEW: Server Status Tool
+        val btnServerStatusTool = navView.findViewById<Button>(R.id.btnServerStatusTool)
+        btnServerStatusTool.setOnClickListener {
+            loadingOverlay.visibility = View.VISIBLE
+            webView.loadUrl("https://status.palia.com/")
             drawerLayout.closeDrawer(GravityCompat.START)
             findViewById<EditText>(R.id.searchWiki).clearFocus()
         }
@@ -120,12 +128,6 @@ class MainActivity : AppCompatActivity() {
             webView.loadUrl("https://palia.interactivemap.app/")
             drawerLayout.closeDrawer(GravityCompat.START)
             findViewById<EditText>(R.id.searchWiki).clearFocus()
-        }
-
-        val btnVillagerGuideTool = navView.findViewById<Button>(R.id.btnVillagerGuideTool)
-        btnVillagerGuideTool.setOnClickListener {
-            startActivity(Intent(this, VillagerGuideActivity::class.java))
-            drawerLayout.closeDrawer(GravityCompat.START)
         }
 
         val btnQuickReferenceTool = navView.findViewById<Button>(R.id.btnQuickReferenceTool)
