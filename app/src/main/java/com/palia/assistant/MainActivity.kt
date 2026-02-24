@@ -99,17 +99,20 @@ class MainActivity : AppCompatActivity() {
             findViewById<EditText>(R.id.searchWiki).clearFocus()
         }
 
-        // NEW: Server Status Tool
-        val btnVillagerTrackerTool = navView.findViewById<Button>(R.id.btnVillagerTrackerTool)
-        btnVillagerTrackerTool.setOnClickListener {
-            startActivity(Intent(this, VillagerTrackerActivity::class.java))
-            drawerLayout.closeDrawer(GravityCompat.START)
-        }
-
+        // FIXED: Using PaliaPedia for Server Status & Live Events
         val btnServerStatusTool = navView.findViewById<Button>(R.id.btnServerStatusTool)
         btnServerStatusTool.setOnClickListener {
             loadingOverlay.visibility = View.VISIBLE
-            webView.loadUrl("https://status.palia.com/")
+            webView.loadUrl("https://paliapedia.com/now")
+            drawerLayout.closeDrawer(GravityCompat.START)
+            findViewById<EditText>(R.id.searchWiki).clearFocus()
+        }
+
+        // FIXED: Using the official PaliaTracker for Villagers
+        val btnVillagerTrackerTool = navView.findViewById<Button>(R.id.btnVillagerTrackerTool)
+        btnVillagerTrackerTool.setOnClickListener {
+            loadingOverlay.visibility = View.VISIBLE
+            webView.loadUrl("https://www.paliatracker.com/")
             drawerLayout.closeDrawer(GravityCompat.START)
             findViewById<EditText>(R.id.searchWiki).clearFocus()
         }

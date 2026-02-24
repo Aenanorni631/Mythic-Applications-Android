@@ -29,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Server Status"
-        android:backgroundTint="#8B0000"
+        android:backgroundTint="#302B63"
         android:textColor="#FFFFFF"
         android:layout_marginBottom="12dp"/>
 
@@ -37,8 +37,8 @@
         android:id="@+id/btnVillagerTrackerTool"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Live Villager Tracker"
-        android:backgroundTint="#6A5ACD"
+        android:text="Villager Tracker"
+        android:backgroundTint="#302B63"
         android:textColor="#FFFFFF"
         android:layout_marginBottom="12dp"/>
 
@@ -84,4 +84,12 @@
         android:background="#302B63"
         android:layout_marginBottom="16dp"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="More tools and features are currently under development."
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:textStyle="italic" />
 </LinearLayout>
