@@ -34,10 +34,10 @@
         android:layout_marginBottom="12dp"/>
 
     <Button
-        android:id="@+id/btnVillagerTrackerTool"
+        android:id="@+id/btnPaliaTrackerTool"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Villager Tracker"
+        android:text="Palia Tracker"
         android:backgroundTint="#302B63"
         android:textColor="#FFFFFF"
         android:layout_marginBottom="12dp"/>

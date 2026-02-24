@@ -109,8 +109,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         // FIXED: Using the official PaliaTracker for Villagers
-        val btnVillagerTrackerTool = navView.findViewById<Button>(R.id.btnVillagerTrackerTool)
-        btnVillagerTrackerTool.setOnClickListener {
+        val btnPaliaTrackerTool = navView.findViewById<Button>(R.id.btnPaliaTrackerTool)
+        btnPaliaTrackerTool.setOnClickListener {
             loadingOverlay.visibility = View.VISIBLE
             webView.loadUrl("https://www.paliatracker.com/")
             drawerLayout.closeDrawer(GravityCompat.START)
