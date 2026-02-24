@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.PaliaAssistant" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/palia_primary</item>
+        <item name="colorPrimaryDark">@color/palia_secondary</item>
+        <item name="colorAccent">@color/palia_accent</item>
+        <item name="android:colorBackground">@color/palia_primary</item>
+        <item name="android:statusBarColor">@color/palia_primary</item>
+    </style>
+</resources>
