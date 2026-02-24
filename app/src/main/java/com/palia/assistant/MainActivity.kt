@@ -3,7 +3,6 @@ package com.palia.assistant
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -55,18 +54,27 @@ class MainActivity : AppCompatActivity() {
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        // --- INJECT CUSTOM LOADING SCREEN ---
+        // --- INJECT CUSTOM LOADING SCREEN (CENTERED FIX) ---
         val rootLayout = findViewById<ViewGroup>(android.R.id.content)
         loadingOverlay = LinearLayout(this).apply {
             layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-            setBackgroundColor(Color.parseColor("#0F0C29")) // Sleek Palia dark background
-            gravity = Gravity.CENTER
+            setBackgroundColor(Color.parseColor("#0F0C29"))
+            gravity = Gravity.CENTER // Centers content vertically and horizontally
             orientation = LinearLayout.VERTICAL
-            visibility = View.VISIBLE // Start visible while initial page loads
-            elevation = 100f // Ensure it stays on top
+            visibility = View.VISIBLE
+            elevation = 100f
+
+            // Define layout params to ensure horizontal centering within the vertical layout
+            val centerParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                gravity = Gravity.CENTER_HORIZONTAL
+            }
 
             val spinner = ProgressBar(this@MainActivity).apply {
                 indeterminateDrawable.setColorFilter(Color.parseColor("#6A5ACD"), android.graphics.PorterDuff.Mode.SRC_IN)
+                layoutParams = centerParams
             }
             addView(spinner)
 
@@ -75,6 +83,8 @@ class MainActivity : AppCompatActivity() {
                 setTextColor(Color.WHITE)
                 textSize = 18f
                 setPadding(0, 24, 0, 0)
+                gravity = Gravity.CENTER // Center text within itself
+                layoutParams = centerParams
             }
             addView(text)
         }
@@ -140,7 +150,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
-                loadingOverlay.visibility = View.GONE // Hide loading screen when done
+                loadingOverlay.visibility = View.GONE
                 currentUrl = url ?: ""
                 invalidateOptionsMenu() 
             }

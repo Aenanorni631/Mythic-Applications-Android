@@ -10,8 +10,8 @@ android {
         applicationId "com.palia.assistant"
         minSdk 24
         targetSdk 34
-        versionCode 17
-        versionName "1.2.3"
+        versionCode 18
+        versionName "1.2.4"
     }
     
     applicationVariants.all { variant ->
