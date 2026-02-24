@@ -97,7 +97,6 @@ class MainActivity : AppCompatActivity() {
             findViewById<EditText>(R.id.searchWiki).clearFocus()
         }
 
-        // UPDATED: Now points to the native Kotlin activity instead of the WebView!
         val btnVillagerGiftsTool = navView.findViewById<Button>(R.id.btnVillagerGiftsTool)
         btnVillagerGiftsTool.setOnClickListener {
             startActivity(Intent(this, VillagerGiftsActivity::class.java))
@@ -108,14 +107,6 @@ class MainActivity : AppCompatActivity() {
         btnServerStatusTool.setOnClickListener {
             loadingOverlay.visibility = View.VISIBLE
             webView.loadUrl("https://paliapedia.com/now")
-            drawerLayout.closeDrawer(GravityCompat.START)
-            findViewById<EditText>(R.id.searchWiki).clearFocus()
-        }
-
-        val btnPaliaTrackerTool = navView.findViewById<Button>(R.id.btnPaliaTrackerTool)
-        btnPaliaTrackerTool.setOnClickListener {
-            loadingOverlay.visibility = View.VISIBLE
-            webView.loadUrl("https://www.paliatracker.com/")
             drawerLayout.closeDrawer(GravityCompat.START)
             findViewById<EditText>(R.id.searchWiki).clearFocus()
         }
@@ -173,11 +164,9 @@ class MainActivity : AppCompatActivity() {
         }
         
         val btnNotesTool = navView.findViewById<Button>(R.id.btnNotesTool)
-        if(btnNotesTool != null) {
-            btnNotesTool.setOnClickListener {
-                startActivity(Intent(this, NotesActivity::class.java))
-                drawerLayout.closeDrawer(GravityCompat.START)
-            }
+        btnNotesTool.setOnClickListener {
+            startActivity(Intent(this, NotesActivity::class.java))
+            drawerLayout.closeDrawer(GravityCompat.START)
         }
 
         webView = findViewById(R.id.wikiWebView)

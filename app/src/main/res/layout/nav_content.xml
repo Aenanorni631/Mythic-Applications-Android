@@ -52,15 +52,6 @@
                 android:layout_marginBottom="12dp"/>
 
             <Button
-                android:id="@+id/btnPaliaTrackerTool"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Palia Tracker"
-                android:backgroundTint="#302B63"
-                android:textColor="#FFFFFF"
-                android:layout_marginBottom="12dp"/>
-
-            <Button
                 android:id="@+id/btnGardenPlannerTool"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -121,17 +112,16 @@
                 android:text="Quick Reference"
                 android:backgroundTint="#302B63"
                 android:textColor="#FFFFFF"
+                android:layout_marginBottom="12dp"/>
+
+            <Button
+                android:id="@+id/btnNotesTool"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Palia Notepad"
+                android:backgroundTint="#302B63"
+                android:textColor="#FFFFFF"
                 android:layout_marginBottom="24dp"/>
-
-    <Button
-        android:id="@+id/btnNotesTool"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Palia Notepad"
-        android:backgroundTint="#302B63"
-        android:textColor="#FFFFFF"
-        android:layout_marginBottom="24dp"/>
-
 
             <View
                 android:layout_width="match_parent"
