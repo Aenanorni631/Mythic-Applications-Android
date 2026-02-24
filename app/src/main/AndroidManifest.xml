@@ -27,5 +27,6 @@
         <activity android:name=".VillagerTrackerActivity" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity android:name=".NotesActivity" android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
         <receiver android:name=".ReminderReceiver" android:exported="false" />
+        <activity android:name=".VillagerGiftsActivity" android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
     </application>
 </manifest>

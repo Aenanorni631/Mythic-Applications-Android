@@ -67,9 +67,7 @@ class MainActivity : AppCompatActivity() {
             val centerParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply {
-                gravity = Gravity.CENTER_HORIZONTAL
-            }
+            ).apply { gravity = Gravity.CENTER_HORIZONTAL }
 
             val spinner = ProgressBar(this@MainActivity).apply {
                 indeterminateDrawable.setColorFilter(Color.parseColor("#6A5ACD"), android.graphics.PorterDuff.Mode.SRC_IN)
@@ -99,13 +97,11 @@ class MainActivity : AppCompatActivity() {
             findViewById<EditText>(R.id.searchWiki).clearFocus()
         }
 
-        // NEW: Villager Gift Guide Tool
+        // UPDATED: Now points to the native Kotlin activity instead of the WebView!
         val btnVillagerGiftsTool = navView.findViewById<Button>(R.id.btnVillagerGiftsTool)
         btnVillagerGiftsTool.setOnClickListener {
-            loadingOverlay.visibility = View.VISIBLE
-            webView.loadUrl("https://palia.wiki.gg/wiki/Gifts")
+            startActivity(Intent(this, VillagerGiftsActivity::class.java))
             drawerLayout.closeDrawer(GravityCompat.START)
-            findViewById<EditText>(R.id.searchWiki).clearFocus()
         }
 
         val btnServerStatusTool = navView.findViewById<Button>(R.id.btnServerStatusTool)
@@ -170,16 +166,18 @@ class MainActivity : AppCompatActivity() {
             findViewById<EditText>(R.id.searchWiki).clearFocus()
         }
 
-        val btnNotesTool = navView.findViewById<Button>(R.id.btnNotesTool)
-        btnNotesTool.setOnClickListener {
-            startActivity(Intent(this, NotesActivity::class.java))
-            drawerLayout.closeDrawer(GravityCompat.START)
-        }
-
         val btnQuickReferenceTool = navView.findViewById<Button>(R.id.btnQuickReferenceTool)
         btnQuickReferenceTool.setOnClickListener {
             startActivity(Intent(this, QuickReferenceActivity::class.java))
             drawerLayout.closeDrawer(GravityCompat.START)
+        }
+        
+        val btnNotesTool = navView.findViewById<Button>(R.id.btnNotesTool)
+        if(btnNotesTool != null) {
+            btnNotesTool.setOnClickListener {
+                startActivity(Intent(this, NotesActivity::class.java))
+                drawerLayout.closeDrawer(GravityCompat.START)
+            }
         }
 
         webView = findViewById(R.id.wikiWebView)
