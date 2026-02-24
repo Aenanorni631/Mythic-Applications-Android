@@ -4,25 +4,18 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Color
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
-import android.view.Gravity
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
 import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.ScrollView
-import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 
@@ -52,7 +45,9 @@ class MainActivity : AppCompatActivity() {
         val navView = findViewById<com.google.android.material.navigation.NavigationView>(R.id.nav_view)
         val btnSavedLinksTool = navView.findViewById<Button>(R.id.btnSavedLinksTool)
         btnSavedLinksTool.setOnClickListener {
-            openSavedLinksMenu()
+            // Launch the new sleek page and close the sidebar
+            startActivity(Intent(this, SavedLinksActivity::class.java))
+            drawerLayout.closeDrawer(GravityCompat.START)
         }
 
         webView = findViewById(R.id.wikiWebView)
@@ -68,7 +63,10 @@ class MainActivity : AppCompatActivity() {
                 invalidateOptionsMenu() 
             }
         }
-        webView.loadUrl(currentUrl)
+
+        // Check if we arrived here from the Saved Links page
+        val urlToLoad = intent.getStringExtra("LOAD_URL") ?: currentUrl
+        webView.loadUrl(urlToLoad)
 
         val performSearch = {
             val query = searchField.text.toString().trim()
@@ -85,6 +83,14 @@ class MainActivity : AppCompatActivity() {
                 performSearch()
                 true
             } else false
+        }
+    }
+
+    // This catches intents sent while the app is already open
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        intent?.getStringExtra("LOAD_URL")?.let {
+            webView.loadUrl(it)
         }
     }
 
@@ -143,76 +149,6 @@ class MainActivity : AppCompatActivity() {
             }
             .setNegativeButton("Cancel", null)
             .show()
-    }
-
-    private fun openSavedLinksMenu() {
-        val dialogView = ScrollView(this)
-        val container = LinearLayout(this).apply { 
-            orientation = LinearLayout.VERTICAL
-            setPadding(40, 40, 40, 40) 
-        }
-        dialogView.addView(container)
-
-        val dialog = AlertDialog.Builder(this)
-            .setTitle("Saved Wiki Links")
-            .setView(dialogView)
-            .setPositiveButton("Close", null)
-            .create()
-
-        val allFavs = favPrefs.all
-        if (allFavs.isEmpty()) {
-            container.addView(TextView(this).apply { 
-                text = "No saved links found. Press the star icon on a wiki page to save it."
-                textSize = 16f
-                setTextColor(Color.GRAY)
-            })
-        } else {
-            for ((url, title) in allFavs) {
-                val row = LinearLayout(this).apply { 
-                    orientation = LinearLayout.HORIZONTAL
-                    setPadding(0, 16, 0, 16)
-                    gravity = Gravity.CENTER_VERTICAL
-                }
-                
-                val titleView = TextView(this).apply {
-                    text = "⭐ $title"
-                    textSize = 18f
-                    setTextColor(Color.WHITE) // Changed to white for readability
-                    layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
-                    maxLines = 1
-                    ellipsize = TextUtils.TruncateAt.END
-                    setOnClickListener {
-                        webView.loadUrl(url)
-                        dialog.dismiss()
-                        drawerLayout.closeDrawer(GravityCompat.START)
-                    }
-                }
-                
-                val deleteBtn = Button(this).apply {
-                    text = "X"
-                    setBackgroundColor(Color.RED)
-                    setTextColor(Color.WHITE)
-                    // Made button smaller and added padding
-                    layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
-                        setMargins(16, 0, 0, 0)
-                    }
-                    setPadding(24, 0, 24, 0)
-                    minWidth = 0
-                    minHeight = 0
-                    setOnClickListener {
-                        favPrefs.edit().remove(url).apply()
-                        container.removeView(row)
-                        invalidateOptionsMenu()
-                        if (favPrefs.all.isEmpty()) dialog.dismiss()
-                    }
-                }
-                
-                row.addView(titleView)
-                row.addView(deleteBtn)
-                container.addView(row)
-            }
-        }
-        dialog.show()
     }
 
     override fun onBackPressed() {

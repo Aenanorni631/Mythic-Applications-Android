@@ -18,5 +18,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".SettingsActivity" android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
+        <activity android:name=".SavedLinksActivity" android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
     </application>
 </manifest>
