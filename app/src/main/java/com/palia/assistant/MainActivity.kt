@@ -9,6 +9,7 @@ import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
@@ -43,11 +44,21 @@ class MainActivity : AppCompatActivity() {
         toggle.syncState()
 
         val navView = findViewById<com.google.android.material.navigation.NavigationView>(R.id.nav_view)
+        
+        // Tool 1: Saved Links
         val btnSavedLinksTool = navView.findViewById<Button>(R.id.btnSavedLinksTool)
         btnSavedLinksTool.setOnClickListener {
-            // Launch the new sleek page and close the sidebar
             startActivity(Intent(this, SavedLinksActivity::class.java))
             drawerLayout.closeDrawer(GravityCompat.START)
+        }
+
+        // Tool 2: Official Patch Notes (Forces loading in WebView)
+        val btnPatchNotesTool = navView.findViewById<Button>(R.id.btnPatchNotesTool)
+        btnPatchNotesTool.setOnClickListener {
+            webView.loadUrl("https://palia.wiki.gg/wiki/Patch_Notes")
+            drawerLayout.closeDrawer(GravityCompat.START)
+            // Clear focus from search bar if it was active
+            findViewById<EditText>(R.id.searchWiki).clearFocus()
         }
 
         webView = findViewById(R.id.wikiWebView)
@@ -56,7 +67,14 @@ class MainActivity : AppCompatActivity() {
 
         webView.settings.javaScriptEnabled = true
         webView.settings.domStorageEnabled = true
+        
+        // Strict WebViewClient to force ALL links to open inside the app
         webView.webViewClient = object : WebViewClient() {
+            override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+                view?.loadUrl(request?.url.toString())
+                return true
+            }
+
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
                 currentUrl = url ?: ""
@@ -64,7 +82,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Check if we arrived here from the Saved Links page
         val urlToLoad = intent.getStringExtra("LOAD_URL") ?: currentUrl
         webView.loadUrl(urlToLoad)
 
@@ -86,7 +103,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // This catches intents sent while the app is already open
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         intent?.getStringExtra("LOAD_URL")?.let {
