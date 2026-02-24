@@ -11,6 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.webkit.CookieManager
+import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
 import android.webkit.WebView
@@ -48,14 +49,12 @@ class MainActivity : AppCompatActivity() {
 
         val navView = findViewById<com.google.android.material.navigation.NavigationView>(R.id.nav_view)
         
-        // Tool 1: Saved Links
         val btnSavedLinksTool = navView.findViewById<Button>(R.id.btnSavedLinksTool)
         btnSavedLinksTool.setOnClickListener {
             startActivity(Intent(this, SavedLinksActivity::class.java))
             drawerLayout.closeDrawer(GravityCompat.START)
         }
 
-        // Tool 2: Official Patch Notes
         val btnPatchNotesTool = navView.findViewById<Button>(R.id.btnPatchNotesTool)
         btnPatchNotesTool.setOnClickListener {
             webView.loadUrl("https://palia.wiki.gg/wiki/Patch_Notes")
@@ -63,7 +62,6 @@ class MainActivity : AppCompatActivity() {
             findViewById<EditText>(R.id.searchWiki).clearFocus()
         }
 
-        // Tool 3: Interactive Map
         val btnInteractiveMapTool = navView.findViewById<Button>(R.id.btnInteractiveMapTool)
         btnInteractiveMapTool.setOnClickListener {
             webView.loadUrl("https://palia.interactivemap.app/")
@@ -75,22 +73,31 @@ class MainActivity : AppCompatActivity() {
         val searchField = findViewById<EditText>(R.id.searchWiki)
         val btnSearch = findViewById<Button>(R.id.btnSearch)
 
-        // --- PERFORMANCE ENHANCEMENTS ---
+        // --- ADVANCED PERFORMANCE ENHANCEMENTS ---
         
-        // Force Hardware Acceleration for the WebView
         webView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
+        
+        // WebChromeClient is strictly required for WebGL/Canvas to run efficiently
+        webView.webChromeClient = WebChromeClient()
         
         val settings = webView.settings
         settings.javaScriptEnabled = true
         settings.domStorageEnabled = true
-        settings.databaseEnabled = true // Allows map databases to be cached locally
+        settings.databaseEnabled = true 
         
-        // Caching and Viewport Optimizations
+        // Forces WebView to render map tiles slightly off-screen before you drag them
+        // Eliminates the white borders and stuttering when panning
+        settings.offscreenPreRaster = true
+        
+        // Optimize touch-to-zoom for maps natively
+        settings.setSupportZoom(true)
+        settings.builtInZoomControls = true
+        settings.displayZoomControls = false
+
         settings.cacheMode = WebSettings.LOAD_DEFAULT
         settings.useWideViewPort = true
         settings.loadWithOverviewMode = true
         
-        // Allow map to fetch assets properly without security blocks
         settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
         
