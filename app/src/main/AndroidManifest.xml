@@ -6,6 +6,8 @@
     <application
         android:allowBackup="true"
         android:label="Palia Assistant"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher"
         android:theme="@style/Theme.PaliaAssistant">
         <activity
             android:name=".MainActivity"
