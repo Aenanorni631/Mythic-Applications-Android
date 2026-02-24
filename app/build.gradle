@@ -11,8 +11,15 @@ android {
         minSdk 24
         targetSdk 34
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
     }
+    
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "Palia Assistant V${variant.versionName}.apk"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
