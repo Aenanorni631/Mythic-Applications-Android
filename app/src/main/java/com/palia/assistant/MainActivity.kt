@@ -52,12 +52,19 @@ class MainActivity : AppCompatActivity() {
             drawerLayout.closeDrawer(GravityCompat.START)
         }
 
-        // Tool 2: Official Patch Notes (Forces loading in WebView)
+        // Tool 2: Official Patch Notes
         val btnPatchNotesTool = navView.findViewById<Button>(R.id.btnPatchNotesTool)
         btnPatchNotesTool.setOnClickListener {
             webView.loadUrl("https://palia.wiki.gg/wiki/Patch_Notes")
             drawerLayout.closeDrawer(GravityCompat.START)
-            // Clear focus from search bar if it was active
+            findViewById<EditText>(R.id.searchWiki).clearFocus()
+        }
+
+        // Tool 3: Interactive Map
+        val btnInteractiveMapTool = navView.findViewById<Button>(R.id.btnInteractiveMapTool)
+        btnInteractiveMapTool.setOnClickListener {
+            webView.loadUrl("https://palia.interactivemap.app/")
+            drawerLayout.closeDrawer(GravityCompat.START)
             findViewById<EditText>(R.id.searchWiki).clearFocus()
         }
 
@@ -68,7 +75,6 @@ class MainActivity : AppCompatActivity() {
         webView.settings.javaScriptEnabled = true
         webView.settings.domStorageEnabled = true
         
-        // Strict WebViewClient to force ALL links to open inside the app
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
                 view?.loadUrl(request?.url.toString())
