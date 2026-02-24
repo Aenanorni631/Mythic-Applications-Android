@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/palia_primary"
+    android:background="#0F0C29"
     android:orientation="vertical"
     android:padding="24dp">
 
@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Assistant Tools"
-        android:textColor="@color/palia_accent"
+        android:textColor="#6A5ACD"
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_marginBottom="16dp"/>
@@ -20,14 +20,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Saved Wiki Links"
-        android:backgroundTint="@color/palia_secondary"
-        android:textColor="@color/white"
+        android:backgroundTint="#302B63"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="12dp"/>
+
+    <Button
+        android:id="@+id/btnPatchNotesTool"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Official Patch Notes"
+        android:backgroundTint="#302B63"
+        android:textColor="#FFFFFF"
         android:layout_marginBottom="24dp"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/palia_secondary"
+        android:background="#302B63"
         android:layout_marginBottom="16dp"/>
 
     <TextView
@@ -35,7 +44,7 @@
         android:layout_height="wrap_content"
         android:text="More tools and features are currently under development."
         android:textAlignment="center"
-        android:textColor="@color/white"
+        android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="italic" />
 </LinearLayout>
