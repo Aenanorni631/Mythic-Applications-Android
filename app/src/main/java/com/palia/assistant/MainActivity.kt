@@ -91,6 +91,15 @@ class MainActivity : AppCompatActivity() {
 
         val navView = findViewById<com.google.android.material.navigation.NavigationView>(R.id.nav_view)
         
+        // NEW: Palia Wiki Home Button
+        val btnHomeWikiTool = navView.findViewById<Button>(R.id.btnHomeWikiTool)
+        btnHomeWikiTool.setOnClickListener {
+            loadingOverlay.visibility = View.VISIBLE
+            webView.loadUrl("https://palia.wiki.gg/")
+            drawerLayout.closeDrawer(GravityCompat.START)
+            findViewById<EditText>(R.id.searchWiki).clearFocus()
+        }
+
         val btnSavedLinksTool = navView.findViewById<Button>(R.id.btnSavedLinksTool)
         btnSavedLinksTool.setOnClickListener {
             startActivity(Intent(this, SavedLinksActivity::class.java))

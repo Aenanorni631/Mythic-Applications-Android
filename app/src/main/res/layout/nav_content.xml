@@ -16,6 +16,15 @@
         android:layout_marginBottom="16dp"/>
 
     <Button
+        android:id="@+id/btnHomeWikiTool"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Palia Wiki"
+        android:backgroundTint="#302B63"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="12dp"/>
+
+    <Button
         android:id="@+id/btnSavedLinksTool"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
