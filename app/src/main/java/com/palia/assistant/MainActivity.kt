@@ -8,8 +8,11 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.webkit.CookieManager
 import android.webkit.WebResourceRequest
+import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
@@ -72,9 +75,27 @@ class MainActivity : AppCompatActivity() {
         val searchField = findViewById<EditText>(R.id.searchWiki)
         val btnSearch = findViewById<Button>(R.id.btnSearch)
 
-        webView.settings.javaScriptEnabled = true
-        webView.settings.domStorageEnabled = true
+        // --- PERFORMANCE ENHANCEMENTS ---
         
+        // Force Hardware Acceleration for the WebView
+        webView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
+        
+        val settings = webView.settings
+        settings.javaScriptEnabled = true
+        settings.domStorageEnabled = true
+        settings.databaseEnabled = true // Allows map databases to be cached locally
+        
+        // Caching and Viewport Optimizations
+        settings.cacheMode = WebSettings.LOAD_DEFAULT
+        settings.useWideViewPort = true
+        settings.loadWithOverviewMode = true
+        
+        // Allow map to fetch assets properly without security blocks
+        settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+        CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
+        
+        // ---------------------------------
+
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
                 view?.loadUrl(request?.url.toString())
