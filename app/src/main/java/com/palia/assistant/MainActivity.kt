@@ -4,11 +4,15 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.view.Gravity
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.webkit.CookieManager
 import android.webkit.WebChromeClient
@@ -18,6 +22,9 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
 import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -28,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var webView: WebView
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var favPrefs: SharedPreferences
+    private lateinit var loadingOverlay: LinearLayout
     private var currentUrl: String = "https://palia.wiki.gg/"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +55,32 @@ class MainActivity : AppCompatActivity() {
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
+        // --- INJECT CUSTOM LOADING SCREEN ---
+        val rootLayout = findViewById<ViewGroup>(android.R.id.content)
+        loadingOverlay = LinearLayout(this).apply {
+            layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            setBackgroundColor(Color.parseColor("#0F0C29")) // Sleek Palia dark background
+            gravity = Gravity.CENTER
+            orientation = LinearLayout.VERTICAL
+            visibility = View.VISIBLE // Start visible while initial page loads
+            elevation = 100f // Ensure it stays on top
+
+            val spinner = ProgressBar(this@MainActivity).apply {
+                indeterminateDrawable.setColorFilter(Color.parseColor("#6A5ACD"), android.graphics.PorterDuff.Mode.SRC_IN)
+            }
+            addView(spinner)
+
+            val text = TextView(this@MainActivity).apply {
+                text = "Loading Data..."
+                setTextColor(Color.WHITE)
+                textSize = 18f
+                setPadding(0, 24, 0, 0)
+            }
+            addView(text)
+        }
+        rootLayout.addView(loadingOverlay)
+        // ------------------------------------
+
         val navView = findViewById<com.google.android.material.navigation.NavigationView>(R.id.nav_view)
         
         val btnSavedLinksTool = navView.findViewById<Button>(R.id.btnSavedLinksTool)
@@ -57,6 +91,7 @@ class MainActivity : AppCompatActivity() {
 
         val btnPatchNotesTool = navView.findViewById<Button>(R.id.btnPatchNotesTool)
         btnPatchNotesTool.setOnClickListener {
+            loadingOverlay.visibility = View.VISIBLE
             webView.loadUrl("https://palia.wiki.gg/wiki/Patch_Notes")
             drawerLayout.closeDrawer(GravityCompat.START)
             findViewById<EditText>(R.id.searchWiki).clearFocus()
@@ -64,6 +99,7 @@ class MainActivity : AppCompatActivity() {
 
         val btnInteractiveMapTool = navView.findViewById<Button>(R.id.btnInteractiveMapTool)
         btnInteractiveMapTool.setOnClickListener {
+            loadingOverlay.visibility = View.VISIBLE
             webView.loadUrl("https://palia.interactivemap.app/")
             drawerLayout.closeDrawer(GravityCompat.START)
             findViewById<EditText>(R.id.searchWiki).clearFocus()
@@ -73,44 +109,38 @@ class MainActivity : AppCompatActivity() {
         val searchField = findViewById<EditText>(R.id.searchWiki)
         val btnSearch = findViewById<Button>(R.id.btnSearch)
 
-        // --- ADVANCED PERFORMANCE ENHANCEMENTS ---
-        
         webView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
-        
-        // WebChromeClient is strictly required for WebGL/Canvas to run efficiently
         webView.webChromeClient = WebChromeClient()
         
         val settings = webView.settings
         settings.javaScriptEnabled = true
         settings.domStorageEnabled = true
         settings.databaseEnabled = true 
-        
-        // Forces WebView to render map tiles slightly off-screen before you drag them
-        // Eliminates the white borders and stuttering when panning
         settings.offscreenPreRaster = true
-        
-        // Optimize touch-to-zoom for maps natively
         settings.setSupportZoom(true)
         settings.builtInZoomControls = true
         settings.displayZoomControls = false
-
         settings.cacheMode = WebSettings.LOAD_DEFAULT
         settings.useWideViewPort = true
         settings.loadWithOverviewMode = true
-        
         settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
         
-        // ---------------------------------
-
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+                loadingOverlay.visibility = View.VISIBLE
                 view?.loadUrl(request?.url.toString())
                 return true
             }
 
+            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                super.onPageStarted(view, url, favicon)
+                loadingOverlay.visibility = View.VISIBLE
+            }
+
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
+                loadingOverlay.visibility = View.GONE // Hide loading screen when done
                 currentUrl = url ?: ""
                 invalidateOptionsMenu() 
             }
@@ -122,6 +152,7 @@ class MainActivity : AppCompatActivity() {
         val performSearch = {
             val query = searchField.text.toString().trim()
             if (query.isNotEmpty()) {
+                loadingOverlay.visibility = View.VISIBLE
                 webView.loadUrl("https://palia.wiki.gg/index.php?search=$query")
                 searchField.clearFocus()
             }
@@ -140,6 +171,7 @@ class MainActivity : AppCompatActivity() {
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         intent?.getStringExtra("LOAD_URL")?.let {
+            loadingOverlay.visibility = View.VISIBLE
             webView.loadUrl(it)
         }
     }
@@ -205,6 +237,7 @@ class MainActivity : AppCompatActivity() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
         } else if (webView.canGoBack()) {
+            loadingOverlay.visibility = View.VISIBLE
             webView.goBack()
         } else {
             super.onBackPressed()
