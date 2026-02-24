@@ -122,6 +122,12 @@ class MainActivity : AppCompatActivity() {
             findViewById<EditText>(R.id.searchWiki).clearFocus()
         }
 
+        val btnVillagerGuideTool = navView.findViewById<Button>(R.id.btnVillagerGuideTool)
+        btnVillagerGuideTool.setOnClickListener {
+            startActivity(Intent(this, VillagerGuideActivity::class.java))
+            drawerLayout.closeDrawer(GravityCompat.START)
+        }
+
         val btnQuickReferenceTool = navView.findViewById<Button>(R.id.btnQuickReferenceTool)
         btnQuickReferenceTool.setOnClickListener {
             startActivity(Intent(this, QuickReferenceActivity::class.java))

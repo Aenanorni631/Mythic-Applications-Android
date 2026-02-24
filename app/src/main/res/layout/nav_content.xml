@@ -34,6 +34,15 @@
         android:layout_marginBottom="12dp"/>
 
     <Button
+        android:id="@+id/btnVillagerGuideTool"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Villager Gift Guide"
+        android:backgroundTint="#302B63"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="12dp"/>
+
+    <Button
         android:id="@+id/btnPatchNotesTool"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
