@@ -1,44 +1,51 @@
 package com.palia.assistant
 
-import android.content.Context
-import android.content.SharedPreferences
+import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.Menu
+import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
 import android.widget.EditText
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import java.io.File
+import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
 
 class MainActivity : AppCompatActivity() {
     private lateinit var webView: WebView
-    private lateinit var prefs: SharedPreferences
+    private lateinit var drawerLayout: DrawerLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 1. Setup Database & File Storage Foundation
-        prefs = getSharedPreferences("PaliaAssistantSettings", Context.MODE_PRIVATE)
-        val appStorageDir = File(filesDir, "PaliaData")
-        if (!appStorageDir.exists()) appStorageDir.mkdirs()
+        // Setup Banner / Toolbar
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
 
-        // 2. Initialize UI
+        // Setup Sidebar Toggle
+        drawerLayout = findViewById(R.id.drawer_layout)
+        val toggle = ActionBarDrawerToggle(
+            this, drawerLayout, toolbar,
+            android.R.string.ok, android.R.string.cancel
+        )
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
+        // Setup WebView & Search
         webView = findViewById(R.id.wikiWebView)
         val searchField = findViewById<EditText>(R.id.searchWiki)
         val btnSearch = findViewById<Button>(R.id.btnSearch)
 
-        // 3. Configure WebView
         webView.settings.javaScriptEnabled = true
         webView.settings.domStorageEnabled = true
-        webView.webViewClient = WebViewClient() // Opens links inside the app
-        
-        // 4. Auto-load Wiki Homepage
+        webView.webViewClient = WebViewClient()
         webView.loadUrl("https://palia.wiki.gg/")
 
-        // 5. Search Logic
         val performSearch = {
             val query = searchField.text.toString().trim()
             if (query.isNotEmpty()) {
@@ -48,7 +55,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnSearch.setOnClickListener { performSearch() }
-        
         searchField.setOnEditorActionListener { _, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH || 
                 (event != null && event.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN)) {
@@ -60,7 +66,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Allow hardware back button to navigate wiki history
+    // Load top menu (Settings Button)
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.top_menu, menu)
+        return true
+    }
+
+    // Handle Settings Button Click
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_settings) {
+            startActivity(Intent(this, SettingsActivity::class.java))
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onBackPressed() {
         if (webView.canGoBack()) {
             webView.goBack()

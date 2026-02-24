@@ -1,43 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/palia_primary">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="8dp"
-        android:background="@color/palia_secondary">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/searchWiki"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Search Palia Wiki..."
-            android:textColor="@color/black"
-            android:textColorHint="#555555"
-            android:background="@android:drawable/edit_text"
-            android:padding="10dp"
-            android:inputType="text"
-            android:imeOptions="actionSearch"/>
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/palia_secondary"
+            app:title="Palia Assistant v1.0"
+            app:titleTextColor="@color/white" />
 
-        <Button
-            android:id="@+id/btnSearch"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="GO"
-            android:layout_marginStart="8dp"
-            android:backgroundTint="@color/palia_accent"
-            android:textColor="@color/white"/>
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:background="@color/palia_primary">
+
+            <EditText
+                android:id="@+id/searchWiki"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Search Palia Wiki..."
+                android:textColor="@color/black"
+                android:textColorHint="#555555"
+                android:background="@android:drawable/edit_text"
+                android:padding="10dp"
+                android:inputType="text"
+                android:imeOptions="actionSearch"/>
+
+            <Button
+                android:id="@+id/btnSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="GO"
+                android:layout_marginStart="8dp"
+                android:backgroundTint="@color/palia_accent"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+
+        <WebView
+            android:id="@+id/wikiWebView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 
-    <WebView
-        android:id="@+id/wikiWebView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/palia_primary">
+        
+        <include layout="@layout/nav_content" />
+        
+    </com.google.android.material.navigation.NavigationView>
 
-</LinearLayout>
+</androidx.drawerlayout.widget.DrawerLayout>
